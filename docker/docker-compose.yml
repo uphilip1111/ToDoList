@@ -1,0 +1,29 @@
+version: '3'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "80:80"
+    network_mode: bridge
+    volumes:
+      - ../todolist:/var/www/html/app
+    command: /bin/bash /entrypoint.sh
+    container_name: todolist_api
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data/:/var/lib/mysql
+    network_mode: bridge
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=homestead
+      - MYSQL_USER=homestead
+      - MYSQL_PASSWORD=123456
+    container_name: todolist_db
