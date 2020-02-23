@@ -15,4 +15,5 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'] ,function() {
     Route::post('/login', 'LoginController@login');
+    Route::get('/access_token', 'AuthController@getAccessToken');
 });
