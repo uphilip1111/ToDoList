@@ -37,7 +37,8 @@ RUN \
 
 RUN \
     mkdir -p /var/log/php && \
-    sed -i 's/^error_log\ =\ \/var\/log/error_log\ =\ \/var\/log\/php/g' /etc/php/7.2/fpm/php-fpm.conf
+    sed -i 's/^error_log\ =\ \/var\/log/error_log\ =\ \/var\/log\/php/g' /etc/php/7.2/fpm/php-fpm.conf && \
+    usermod -u 1000 www-data
 
 COPY config/local.conf /etc/nginx/conf.d/default.conf
 COPY config/nginx.conf /etc/nginx/nginx.conf
