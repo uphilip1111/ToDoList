@@ -17,3 +17,7 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'] ,function() {
     Route::post('/login', 'LoginController@login');
     Route::get('/access_token', 'AuthController@getAccessToken');
 });
+
+Route::group(['middleware' => 'verify.token'], function() {
+    
+});
