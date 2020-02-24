@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Symfony\Component\HttpFoundation\Response;
-use App\User;
+use App\Http\Requests\LoginRequest;
 
 class LoginController extends Controller
 {
@@ -40,11 +40,15 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(): Response
+    public function login(LoginRequest $request): Response
     {
-        $user = new User();
+        $credentials = $request->only('email', 'password');
 
-        $token = JWTAuth::fromUser($user);
+        if (! $token = JWTAuth::attempt($credentials)) {
+            return response()->json([
+                'message' => 'invalid credentials'
+            ], 401);
+        }
 
         return response()->json([
             'message' => 'success',

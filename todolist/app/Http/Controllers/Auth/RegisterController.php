@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Requests\RegisterRequest;
+use App\Services\RegisterServices;
+use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
 {
@@ -59,14 +60,17 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function create(array $data)
+    protected function create(RegisterRequest $request, RegisterServices $registerServices): Response
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $data = $request->all();
+
+        $user = $registerServices->createUser($data);
+
+        return response()->json([
+            'message' => 'success',
+            'data'    => $user,
         ]);
     }
 }
