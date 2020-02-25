@@ -24,4 +24,6 @@ Route::group(['middleware' => 'refresh.token'], function() {
     Route::get('/todo-list/{id}', 'ToDoListController@getToDoListById')->name('todoList.get');
     Route::post('/todo-list', 'ToDoListController@addToDoList')->name('todoList.add');
     Route::patch('/todo-list/{id}', 'ToDoListController@updateToDoListById')->name('todoList.update');
+    Route::delete('/todo-list/{id}', 'ToDoListController@deleteToDoListById')->name('todoList.delete');
+    Route::delete('/todo-lists', 'ToDoListController@deleteAllToDoList')->name('todoList.delete.all');
 });

@@ -28,4 +28,21 @@ class ToDoListServices
 
         return $todoList->update($updateToDoList);
     }
+
+    public function deleteById(int $id): bool
+    {
+        $todoList = TodoLists::find($id);
+
+        if (is_null($todoList)) {
+            return false;
+        }
+        return $todoList->delete();
+    }
+
+    public function deleteAll(): int
+    {
+        $todoLists = ToDoLists::whereNull('deleted_at');
+
+        return $todoLists->delete();
+    }
 }

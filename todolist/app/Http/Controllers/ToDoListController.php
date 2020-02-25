@@ -55,4 +55,30 @@ class ToDoListController extends Controller
             'data'    => []
         ]);
     }
+
+    public function deleteToDoListById(int $id, ToDoListServices $toDoListServices): Response
+    {
+        $result = $toDoListServices->deleteById($id);
+
+        if (!$result) {
+            return response([
+                'message' => 'not found',
+                'data'    => []
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'success',
+            'data'    => []
+        ]);
+    }
+
+    public function deleteAllToDoList(ToDoListServices $toDoListServices): Response
+    {
+        $result = $toDoListServices->deleteAll();
+        return response()->json([
+            'message' => '',
+            'data'    => []
+        ]);
+    }
 }
