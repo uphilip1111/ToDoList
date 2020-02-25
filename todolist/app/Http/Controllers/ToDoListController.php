@@ -26,7 +26,6 @@ class ToDoListController extends Controller
     public function addToDoList(AddToDoListRequest $request, ToDoListServices $toDoListServices): Response
     {
         $todoList = $request->only(['title', 'content', 'attachment']);
-        $todoList = $request->all();
         $toDoListServices->addToDoList($todoList);
 
         return response()->json([
