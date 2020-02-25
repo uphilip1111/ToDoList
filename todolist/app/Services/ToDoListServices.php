@@ -21,4 +21,11 @@ class ToDoListServices
     {
         TodoLists::create($todoList);
     }
+
+    public function updateToDoListById(int $id, array $updateToDoList): bool
+    {
+        $todoList = $this->getToDoListById($id);
+
+        return $todoList->update($updateToDoList);
+    }
 }

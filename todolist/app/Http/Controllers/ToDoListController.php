@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AddToDoListRequest;
+use App\Http\Requests\{
+    AddToDoListRequest,
+    UpdateToDoListRequest
+};
 use App\Http\Resources\{ToDoListsResource, AToDoListResource};
 use App\Services\ToDoListServices;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +30,25 @@ class ToDoListController extends Controller
     {
         $todoList = $request->only(['title', 'content', 'attachment']);
         $toDoListServices->addToDoList($todoList);
+
+        return response()->json([
+            'message' => 'success',
+            'data'    => []
+        ]);
+    }
+
+    public function updateToDoListById(UpdateToDoListRequest $request, int $id, ToDoListServices $toDoListServices): Response
+    {
+        $updateToDoList = $request->only(['title', 'content', 'attachment', 'done_at']);
+
+        $result = $toDoListServices->updateToDoListById($id, $updateToDoList);
+
+        if (!$result) {
+            return response()->json([
+                'message' => 'update fail',
+                'data'    => []
+            ]);
+        }
 
         return response()->json([
             'message' => 'success',

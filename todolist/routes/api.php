@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'] ,function() {
     Route::post('/register', 'RegisterController@create')->name('auth.register');
     Route::post('/login', 'LoginController@login')->name('auth.login');
-    Route::get('/access_token', 'AuthController@getAccessToken')->name('auth.getToken');
     Route::get('/token/status', 'AuthController@getTokenStatus')->name('auth.token.status');
 });
 
@@ -24,4 +23,5 @@ Route::group(['middleware' => 'refresh.token'], function() {
     Route::get('/todo-lists', 'ToDoListController@getAllToDoList')->name('todoList.all');
     Route::get('/todo-list/{id}', 'ToDoListController@getToDoListById')->name('todoList.get');
     Route::post('/todo-list', 'ToDoListController@addToDoList')->name('todoList.add');
+    Route::patch('/todo-list/{id}', 'ToDoListController@updateToDoListById')->name('todoList.update');
 });
