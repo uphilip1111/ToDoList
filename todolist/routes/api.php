@@ -21,5 +21,6 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'] ,function() {
 
 Route::group(['middleware' => 'verify.token'], function() {
     Route::get('/todo-lists', 'ToDoListController@getAllToDoList')->name('todoList.all');
+    Route::get('/todo-list/{id}', 'ToDoListController@getToDoListById')->name('todoList.get');
     Route::post('/todo-list', 'ToDoListController@addToDoList')->name('todoList.add');
 });

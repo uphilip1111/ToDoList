@@ -3,8 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Database\Eloquent\Collection;
 
-class ToDoListResponse extends JsonResource
+class ToDoListResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

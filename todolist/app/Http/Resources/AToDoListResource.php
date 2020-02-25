@@ -2,12 +2,12 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class ToDoListsResponse extends ResourceCollection
+class AToDoListResource extends JsonResource
 {
     /**
-     * Transform the resource collection into an array.
+     * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
@@ -16,7 +16,7 @@ class ToDoListsResponse extends ResourceCollection
     {
         return [
             'message' => 'success',
-            'data'    => ToDoListResponse::collection($this->collection)
+            'data'    => ToDoListResource::make($this)
         ];
     }
 }

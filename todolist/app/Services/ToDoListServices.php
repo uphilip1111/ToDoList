@@ -12,6 +12,11 @@ class ToDoListServices
         return TodoLists::all();
     }
 
+    public function getToDoListById(int $id): TodoLists
+    {
+        return TodoLists::find($id);
+    }
+
     public function addToDoList(array $todoList): void
     {
         TodoLists::create($todoList);
