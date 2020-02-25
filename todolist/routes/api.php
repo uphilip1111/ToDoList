@@ -16,7 +16,11 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'] ,function() {
     Route::post('/register', 'RegisterController@create')->name('auth.register');
     Route::post('/login', 'LoginController@login')->name('auth.login');
-    Route::get('/token/status', 'AuthController@getTokenStatus')->name('auth.token.status');
+
+    Route::middleware(['verify.token'])->group(function() {
+        Route::get('/token/status', 'AuthController@getTokenStatus')->name('auth.token.status');
+        Route::get('/token', 'AuthController@refreshToken')->name('auth.token.refresh');
+    });
 });
 
 Route::group(['middleware' => 'refresh.token'], function() {

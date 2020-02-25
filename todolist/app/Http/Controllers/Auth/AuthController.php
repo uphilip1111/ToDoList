@@ -20,4 +20,16 @@ class AuthController extends Controller
             ],
         ]);
     }
+
+    public function refreshToken()
+    {
+        $token = auth()->refresh();
+
+        return response()->json([
+            'message' => 'success',
+            'data'    => [
+                'access_token' => $token,
+            ]
+        ]);
+    }
 }
