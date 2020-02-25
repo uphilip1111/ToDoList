@@ -14,11 +14,12 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'] ,function() {
-    Route::post('/register', 'RegisterController@create');
-    Route::post('/login', 'LoginController@login');
-    Route::get('/access_token', 'AuthController@getAccessToken');
+    Route::post('/register', 'RegisterController@create')->name('auth.register');
+    Route::post('/login', 'LoginController@login')->name('auth.login');
+    Route::get('/access_token', 'AuthController@getAccessToken')->name('auth.getToken');
 });
 
 Route::group(['middleware' => 'verify.token'], function() {
-    
+    Route::get('/todo-lists', 'ToDoListController@getAllToDoList')->name('todoList.all');
+    Route::post('/todo-list', 'ToDoListController@addToDoList')->name('todoList.add');
 });
