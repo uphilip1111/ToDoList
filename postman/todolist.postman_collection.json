@@ -1,0 +1,620 @@
+{
+	"info": {
+		"_postman_id": "b36dbea6-be1a-42cc-993f-b946eaf51f46",
+		"name": "todolist",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "01.註冊",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "12",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "abc@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "111111",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "02.登入",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "abc@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "111111",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03.Token Status",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c769f240-ca39-4c45-80ff-d32998da2650",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'http://localhost/api/auth/login',",
+							"    method: 'post',",
+							"    body: {",
+							"      mode: 'formdata',",
+							"      formdata: [",
+							"        {key: \"email\", value: \"abc@example.net\"},",
+							"        {key: \"password\", value: \"123456\"},",
+							"      ]",
+							"    }",
+							"},  function(err, response) {",
+							"  const jsonResponse = response.json();",
+							"  console.log(jsonResponse.data.access_token);",
+							"  pm.environment.set(\"signin_token\", jsonResponse.data.access_token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{signin_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/api/auth/token/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"auth",
+						"token",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "04.新增todolist",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "88cb3790-e727-479c-86ea-f0742f3356d1",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'http://localhost/api/auth/login',",
+							"    method: 'post',",
+							"    body: {",
+							"      mode: 'formdata',",
+							"      formdata: [",
+							"        {key: \"email\", value: \"abc@example.net\"},",
+							"        {key: \"password\", value: \"123456\"},",
+							"      ]",
+							"    }",
+							"},  function(err, response) {",
+							"  const jsonResponse = response.json();",
+							"  console.log(jsonResponse.data.access_token);",
+							"  pm.environment.set(\"signin_token\", jsonResponse.data.access_token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{signin_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "買早餐",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "06:00去買早餐",
+							"type": "text"
+						},
+						{
+							"key": "attachment",
+							"value": "https://www.youtube.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/api/todo-list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"todo-list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "05.取得所有todolist",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3a3f1e96-ae9c-48c8-be40-7538fa5c3b93",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'http://localhost/api/auth/login',",
+							"    method: 'post',",
+							"    body: {",
+							"      mode: 'formdata',",
+							"      formdata: [",
+							"        {key: \"email\", value: \"abc@example.net\"},",
+							"        {key: \"password\", value: \"123456\"},",
+							"      ]",
+							"    }",
+							"},  function(err, response) {",
+							"  const jsonResponse = response.json();",
+							"  console.log(jsonResponse.data.access_token);",
+							"  pm.environment.set(\"signin_token\", jsonResponse.data.access_token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{signin_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost/api/todo-lists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"todo-lists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "06.取得指定todolist",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3a3f1e96-ae9c-48c8-be40-7538fa5c3b93",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'http://localhost/api/auth/login',",
+							"    method: 'post',",
+							"    body: {",
+							"      mode: 'formdata',",
+							"      formdata: [",
+							"        {key: \"email\", value: \"abc@example.net\"},",
+							"        {key: \"password\", value: \"123456\"},",
+							"      ]",
+							"    }",
+							"},  function(err, response) {",
+							"  const jsonResponse = response.json();",
+							"  console.log(jsonResponse.data.access_token);",
+							"  pm.environment.set(\"signin_token\", jsonResponse.data.access_token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{signin_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/api/todo-list/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"todo-list",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "07.更新todolist",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "471bd342-5c15-4cb4-a8f5-d33165ecb80e",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'http://localhost/api/auth/login',",
+							"    method: 'post',",
+							"    body: {",
+							"      mode: 'formdata',",
+							"      formdata: [",
+							"        {key: \"email\", value: \"abc@example.net\"},",
+							"        {key: \"password\", value: \"123456\"},",
+							"      ]",
+							"    }",
+							"},  function(err, response) {",
+							"  const jsonResponse = response.json();",
+							"  console.log(jsonResponse.data.access_token);",
+							"  pm.environment.set(\"signin_token\", jsonResponse.data.access_token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{signin_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "買早餐",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "06:00去買早餐",
+							"type": "text"
+						},
+						{
+							"key": "attachment",
+							"value": "https://www.youtube.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/api/todo-list/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"todo-list",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "08.刪除by ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6d6b20b3-715b-435f-b754-af0fbd210e04",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'http://localhost/api/auth/login',",
+							"    method: 'post',",
+							"    body: {",
+							"      mode: 'formdata',",
+							"      formdata: [",
+							"        {key: \"email\", value: \"abc@example.net\"},",
+							"        {key: \"password\", value: \"123456\"},",
+							"      ]",
+							"    }",
+							"},  function(err, response) {",
+							"  const jsonResponse = response.json();",
+							"  console.log(jsonResponse.data.access_token);",
+							"  pm.environment.set(\"signin_token\", jsonResponse.data.access_token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{signin_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/api/todo-list/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"todo-list",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "09.刪除all",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6d6b20b3-715b-435f-b754-af0fbd210e04",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'http://localhost/api/auth/login',",
+							"    method: 'post',",
+							"    body: {",
+							"      mode: 'formdata',",
+							"      formdata: [",
+							"        {key: \"email\", value: \"abc@example.net\"},",
+							"        {key: \"password\", value: \"123456\"},",
+							"      ]",
+							"    }",
+							"},  function(err, response) {",
+							"  const jsonResponse = response.json();",
+							"  console.log(jsonResponse.data.access_token);",
+							"  pm.environment.set(\"signin_token\", jsonResponse.data.access_token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{signin_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/api/todo-lists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"todo-lists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10.產生新token",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "158e49b9-304c-49ed-a4f4-653c17e85246",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'http://localhost/api/auth/login',",
+							"    method: 'post',",
+							"    body: {",
+							"      mode: 'formdata',",
+							"      formdata: [",
+							"        {key: \"email\", value: \"abc@example.net\"},",
+							"        {key: \"password\", value: \"123456\"},",
+							"      ]",
+							"    }",
+							"},  function(err, response) {",
+							"  const jsonResponse = response.json();",
+							"  console.log(jsonResponse.data.access_token);",
+							"  pm.environment.set(\"signin_token\", jsonResponse.data.access_token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{signin_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/api/auth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
