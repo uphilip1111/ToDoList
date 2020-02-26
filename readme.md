@@ -54,6 +54,8 @@ $ docker exec -it todolist_api /var/www/html/app/artisan db:seed
 $ docker exec -it todolist_api /var/www/html/app/vendor/bin/phpunit
 `
 
+## Function
+
 - [x] get all to-do lists
 - [x] get one to-do list
 - [x] create one to-do list
@@ -62,6 +64,8 @@ $ docker exec -it todolist_api /var/www/html/app/vendor/bin/phpunit
 - [x] delete all to-do list
 - [x] generate a new token
 - [x] get token status
+
+## 
 
 ## Postman
 
