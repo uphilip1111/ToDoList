@@ -12,7 +12,7 @@ class ToDoListServices
         return TodoLists::all();
     }
 
-    public function getToDoListById(int $id): TodoLists
+    public function getToDoListById(int $id): ?TodoLists
     {
         return TodoLists::find($id);
     }

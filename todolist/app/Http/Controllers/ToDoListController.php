@@ -23,6 +23,13 @@ class ToDoListController extends Controller
     {
         $todoList = $toDoListServices->getToDoListById($id);
 
+        if (is_null($todoList)) {
+            return response([
+                'message' => 'not found',
+                'data'    => []
+            ], 404);
+        }
+
         return AToDoListResource::make($todoList)->response();
     }
 
